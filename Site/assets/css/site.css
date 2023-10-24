@@ -1,0 +1,35 @@
+.user-data-post {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.experince-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.exper-data {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.exper-data-cv {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 55px;
+}
+
+/* .experince-section .icon i{
+    background-color: red;
+    height: 30px;
+    width: 30px;
+} */
+
+/* .row {
+    background-color: red;
+} */

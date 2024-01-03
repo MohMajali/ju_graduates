@@ -10,7 +10,7 @@ if (isset($_POST['Submit'])) {
     $password = $_POST['password'];
     $phone = $_POST['phone'];
     $image = 'https://www.computerhope.com/jargon/g/guest-user.png';
-    $userTypeId = 2;
+    $userTypeId = $_POST['user_type_id'];
 
     $stmt = $con->prepare("SELECT id FROM users WHERE email = ?");
     $stmt->bind_param("s", $email);
@@ -60,8 +60,8 @@ if (isset($_POST['Submit'])) {
     <meta content="" name="keywords" />
 
     <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon" />
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
+    <link href="assets/img/image00001.jpeg" rel="icon" />
+    <link href="assets/img/image00001.jpeg" rel="apple-touch-icon" />
 
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect" />
@@ -105,8 +105,8 @@ if (isset($_POST['Submit'])) {
                     href="index.html"
                     class="logo d-flex align-items-center w-auto"
                   >
-                    <img src="assets/img/logo.png" alt="" />
-                     
+                    <img src="assets/img/image00001.jpeg" alt="" />
+
                   </a>
                 </div>
                 <!-- End Logo -->
@@ -186,8 +186,17 @@ if (isset($_POST['Submit'])) {
                           required
                         />
                         <div class="invalid-feedback">
-                          Please enter valid password!
+                        Password Must be at least One Upper case, One Lower Case, Numbers & Symbols
                         </div>
+                      </div>
+
+
+                      <div class="col-12">
+                        <label for="defaultSelect" class="form-label">Select Role</label>
+                        <select id="defaultSelect" name="user_type_id" class="form-select" required>
+                          <option value="2">Student</option>
+                          <option value="3">Company</option>
+                        </select>
                       </div>
 
                       <div class="col-12">

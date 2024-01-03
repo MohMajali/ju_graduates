@@ -8,14 +8,23 @@ $S_ID = $_SESSION['S_Log'];
 $student_id = $_GET['student_id'];
 
 if ($student_id) {
-    $sql1 = mysqli_query($con, "select * from users where id='$student_id'");
+    $sql1 = mysqli_query($con, "select * from users where id='$S_ID'");
     $row1 = mysqli_fetch_array($sql1);
 
-    $student_name = $row1['name'];
-    $student_email = $row1['email'];
-    $phone = $row1['phone'];
-    $password = $row1['password'];
-}
+    $name = $row1['name'];
+    $email = $row1['email'];
+    $userType = $row1['user_type_id'];
+
+
+
+    $sql2 = mysqli_query($con, "select * from users where id='$student_id'");
+    $row2 = mysqli_fetch_array($sql2);
+  
+    $student_name = $row2['name'];
+    $student_email = $row2['email'];
+    $phone = $row2['phone'];
+    $password = $row2['password'];
+  }
 
 ?>
 
@@ -29,7 +38,7 @@ if ($student_id) {
     <meta content="Free HTML Templates" name="description" />
 
     <!-- Favicon -->
-    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/image00001_png.png" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -73,61 +82,11 @@ if ($student_id) {
     </div>
     <!-- Spinner End -->
 
-    <!-- Topbar Start -->
-    <div class="container-fluid bg-dark px-5 d-none d-lg-block">
-      <div class="row gx-0">
-        <div class="col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
-          <div class="d-inline-flex align-items-center" style="height: 45px">
-            <small class="me-3 text-light"
-              ><i class="fa fa-map-marker-alt me-2"></i>123 Street, New York,
-              USA</small
-            >
-            <small class="me-3 text-light"
-              ><i class="fa fa-phone-alt me-2"></i>+012 345 6789</small
-            >
-            <small class="text-light"
-              ><i class="fa fa-envelope-open me-2"></i>info@example.com</small
-            >
-          </div>
-        </div>
-        <div class="col-lg-4 text-center text-lg-end">
-          <div class="d-inline-flex align-items-center" style="height: 45px">
-            <a
-              class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2"
-              href=""
-              ><i class="fab fa-twitter fw-normal"></i
-            ></a>
-            <a
-              class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2"
-              href=""
-              ><i class="fab fa-facebook-f fw-normal"></i
-            ></a>
-            <a
-              class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2"
-              href=""
-              ><i class="fab fa-linkedin-in fw-normal"></i
-            ></a>
-            <a
-              class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2"
-              href=""
-              ><i class="fab fa-instagram fw-normal"></i
-            ></a>
-            <a
-              class="btn btn-sm btn-outline-light btn-sm-square rounded-circle"
-              href=""
-              ><i class="fab fa-youtube fw-normal"></i
-            ></a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Topbar End -->
-
     <!-- Navbar Start -->
     <div class="container-fluid position-relative p-0">
       <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
         <a href="index.php" class="navbar-brand p-0">
-          <img src="assets/img/favicon.png" alt="">
+          <img src="assets/img/image00001_png.png" alt="" width="150px" height="150px">
         </a>
         <button
           class="navbar-toggler"
@@ -138,102 +97,42 @@ if ($student_id) {
           <span class="fa fa-bars"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
-          <div class="navbar-nav ms-auto py-0">
-            <a href="index.php" class="nav-item nav-link">Home</a>
-            <a href="about.php" class="nav-item nav-link">About</a>
-            <a href="contact.php" class="nav-item nav-link">Contact</a>
+        <div class="navbar-nav ms-auto py-0">
+                    <a href="index.php" class="nav-item nav-link ">Home</a>
+                    <a href="about.php" class="nav-item nav-link">About</a>
 
-            <?php if ($S_ID) {?>
+                    <?php if ($userType == 3) {?>
+                        <a href="./Students.php" class="nav-item nav-link">Students</a>
+                        <?php }?>
 
-            <div class="nav-item dropdown">
-              <a
-                href="#"
-                class="nav-link dropdown-toggle"
-                data-bs-toggle="dropdown"
-                ><?php echo $student_name ?></a
-              >
-              <div class="dropdown-menu m-0">
-                <a href="./Profile.php" class="dropdown-item">Profile</a>
-                <a href="./Logout.php" class="dropdown-item">Logout</a>
-              </div>
-            </div>
+                    <a href="contact.php" class="nav-item nav-link">Contact</a>
 
-            <?php } else {?>
+                    <?php if ($S_ID) {?>
 
-            <a href="../Login.php" class="nav-item nav-link">Login</a>
-            <a href="./Students.php" class="nav-item nav-link active">Students</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><?php echo $name ?></a>
+                        <div class="dropdown-menu m-0">
 
-            <?php }?>
-          </div>
+                        <?php if ($userType != 3) {?>
+                        <a href="./Profile.php" class="dropdown-item">Profile</a>
+                        <?php }?>
+                            <a href="./Setting.php" class="dropdown-item">Settings</a>
+                            <a href="./MyPosts.php" class="dropdown-item">My Posts</a>
+                            <a href="./Logout.php" class="dropdown-item">Logout</a>
+                        </div>
+                    </div>
+
+                    <?php } else {?>
+
+                        <a href="../Login.php" class="nav-item nav-link">Login</a>
+
+                    <?php }?>
+
+                </div>
         </div>
       </nav>
 
-      <div
-        id="header-carousel"
-        class="carousel slide carousel-fade"
-        data-bs-ride="carousel"
-      >
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img class="w-100" src="img/carousel-1.jpg" alt="Image" />
-            <div
-              class="carousel-caption d-flex flex-column align-items-center justify-content-center"
-            >
-              <div class="p-3" style="max-width: 900px">
-                <h5 class="text-white text-uppercase mb-3 animated slideInDown">
-                  Meet up with students
-                </h5>
-                <h1 class="display-1 text-white mb-md-4 animated zoomIn">
-                  Creative & Innovative Digital Solution
-                </h1>
-                <a
-                  href=""
-                  class="btn btn-outline-light py-md-3 px-md-5 animated slideInRight"
-                  >Contact Us</a
-                >
-              </div>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <img class="w-100" src="img/carousel-2.jpg" alt="Image" />
-            <div
-              class="carousel-caption d-flex flex-column align-items-center justify-content-center"
-            >
-              <div class="p-3" style="max-width: 900px">
-                <h5 class="text-white text-uppercase mb-3 animated slideInDown">
-                  Meet up with students
-                </h5>
-                <h1 class="display-1 text-white mb-md-4 animated zoomIn">
-                  Creative & Innovative Digital Solution
-                </h1>
-                <a
-                  href=""
-                  class="btn btn-outline-light py-md-3 px-md-5 animated slideInRight"
-                  >Contact Us</a
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-        <button
-          class="carousel-control-prev"
-          type="button"
-          data-bs-target="#header-carousel"
-          data-bs-slide="prev"
-        >
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button
-          class="carousel-control-next"
-          type="button"
-          data-bs-target="#header-carousel"
-          data-bs-slide="next"
-        >
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
+
     </div>
     <!-- Navbar End -->
 
@@ -250,6 +149,62 @@ if ($student_id) {
           <div class="row justify-content-center g-5">
             <div class="col-lg-6 wow slideInUp" data-wow-delay="0.3s">
 
+
+
+
+
+            <div class="card mt-2">
+                <div class="card-body">
+                  <div class="experince-section">
+                    <h5 class="card-title w-25">Majors</h5>
+                    
+                  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  <?php
+$sql1 = mysqli_query($con, "SELECT * from student_majors WHERE student_id = '$student_id' ORDER BY id DESC");
+
+while ($row1 = mysqli_fetch_array($sql1)) {
+
+    $student_major_id = $row1['id'];
+    $major_id = $row1['major_id'];
+    $gpa = $row1['gpa'];
+    $major_start_date = $row1['start_date'];
+    $major_end_date = $row1['end_date'];
+
+    $sql2 = mysqli_query($con, "SELECT * from majors WHERE id = '$major_id'");
+    $row2 = mysqli_fetch_array($sql2);
+
+    $major_name = $row2['name'];
+
+    ?>
+                  <div
+                    class="card-body profile-card pt-4 d-flex flex-row align-items-center gap-2"
+                  >
+                    <div>
+                      <div class="exper-data">
+                      <h2 class=""><?php echo $major_name ?></h2>
+                      </div>
+                      <h3><?php echo $gpa ?></h3>
+                      <h5><?php echo date("Y-m-d", strtotime($major_start_date)); ?> - <?php echo date("Y-m-d", strtotime($major_end_date)); ?></h5>
+                    </div>
+                  </div>
+                  <hr />
+<?php }?>
+                </div>
+              </div>
 
               <div class="card mt-2">
                 <div class="card-body">

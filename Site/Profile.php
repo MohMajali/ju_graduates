@@ -13,6 +13,7 @@ if ($S_ID) {
     $student_email = $row1['email'];
     $phone = $row1['phone'];
     $password = $row1['password'];
+    $userType = $row1['user_type_id'];
 
     if (isset($_POST['SubmitExper'])) {
 
@@ -42,13 +43,16 @@ if ($S_ID) {
     } else if (isset($_POST['SubmitCourse'])) {
 
         $course_id = $_POST['course_id'];
+        $getCourseId = mysqli_query($con, "SELECT id FROM courses WHERE name = '$course_id'");
+        $courseRow = mysqli_fetch_array($getCourseId);
+
         $student_id = $_POST['student_id'];
         $start_date = $_POST['start_date'];
         $end_date = $_POST['end_date'];
 
         $stmt = $con->prepare("INSERT INTO student_courses (course_id, student_id, start_date, end_date) VALUES (?, ?, ?, ?) ");
 
-        $stmt->bind_param("iiss", $course_id, $student_id, $start_date, $end_date);
+        $stmt->bind_param("iiss", $$courseRow['id'], $student_id, $start_date, $end_date);
 
         if ($stmt->execute()) {
 
@@ -180,57 +184,6 @@ document.location='./Profile.php';
             }
         }
 
-    } else if (isset($_POST['SubmitAccount'])) {
-
-        $password = $_POST['password'];
-        $phone = $_POST['phone'];
-        $email = $_POST['email'];
-        $name = $_POST['name'];
-        $student_id = $_POST['student_id'];
-        $file;
-        $file = $_FILES["file"]["name"];
-
-        if ($file) {
-
-            $file = 'Student-Images/' . $file;
-
-            $stmt = $con->prepare("UPDATE users SET name = ?, email = ?, phone = ?, password = ?, image = ?  WHERE id = ?");
-
-            $stmt->bind_param("sssssi", $name, $email, $phone, $password, $file, $student_id);
-
-            if ($stmt->execute()) {
-
-                move_uploaded_file($_FILES["file"]["tmp_name"], "Student-Images/" . $_FILES["file"]["name"]);
-
-                echo "<script language='JavaScript'>
-        alert ('Account Has Been Added Successfully !');
-   </script>";
-
-                echo "<script language='JavaScript'>
-  document.location='./Profile.php';
-     </script>";
-
-            }
-        } else {
-
-            $stmt = $con->prepare("UPDATE users SET name = ?, email = ?, phone = ?, password = ?  WHERE id = ?");
-
-            $stmt->bind_param("ssssi", $name, $email, $phone, $password, $student_id);
-
-            if ($stmt->execute()) {
-
-                echo "<script language='JavaScript'>
-      alert ('Account Has Been Added Successfully !');
- </script>";
-
-                echo "<script language='JavaScript'>
-document.location='./Profile.php';
-   </script>";
-
-            }
-
-        }
-
     } else if (isset($_POST['SubmitMajor'])) {
 
         $student_id = $_POST['student_id'];
@@ -270,7 +223,7 @@ document.location='./Profile.php';
     <meta content="Free HTML Templates" name="description" />
 
     <!-- Favicon -->
-    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/image00001_png.png" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -314,61 +267,13 @@ document.location='./Profile.php';
     </div>
     <!-- Spinner End -->
 
-    <!-- Topbar Start -->
-    <div class="container-fluid bg-dark px-5 d-none d-lg-block">
-      <div class="row gx-0">
-        <div class="col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
-          <div class="d-inline-flex align-items-center" style="height: 45px">
-            <small class="me-3 text-light"
-              ><i class="fa fa-map-marker-alt me-2"></i>123 Street, New York,
-              USA</small
-            >
-            <small class="me-3 text-light"
-              ><i class="fa fa-phone-alt me-2"></i>+012 345 6789</small
-            >
-            <small class="text-light"
-              ><i class="fa fa-envelope-open me-2"></i>info@example.com</small
-            >
-          </div>
-        </div>
-        <div class="col-lg-4 text-center text-lg-end">
-          <div class="d-inline-flex align-items-center" style="height: 45px">
-            <a
-              class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2"
-              href=""
-              ><i class="fab fa-twitter fw-normal"></i
-            ></a>
-            <a
-              class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2"
-              href=""
-              ><i class="fab fa-facebook-f fw-normal"></i
-            ></a>
-            <a
-              class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2"
-              href=""
-              ><i class="fab fa-linkedin-in fw-normal"></i
-            ></a>
-            <a
-              class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2"
-              href=""
-              ><i class="fab fa-instagram fw-normal"></i
-            ></a>
-            <a
-              class="btn btn-sm btn-outline-light btn-sm-square rounded-circle"
-              href=""
-              ><i class="fab fa-youtube fw-normal"></i
-            ></a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Topbar End -->
+
 
     <!-- Navbar Start -->
     <div class="container-fluid position-relative p-0">
       <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
         <a href="index.php" class="navbar-brand p-0">
-          <img src="assets/img/favicon.png" alt="">
+          <img src="assets/img/image00001_png.png" alt="" width="150px" height="150px">
         </a>
         <button
           class="navbar-toggler"
@@ -379,102 +284,42 @@ document.location='./Profile.php';
           <span class="fa fa-bars"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
-          <div class="navbar-nav ms-auto py-0">
-            <a href="index.php" class="nav-item nav-link">Home</a>
-            <a href="about.php" class="nav-item nav-link">About</a>
-            <a href="contact.php" class="nav-item nav-link">Contact</a>
+        <div class="navbar-nav ms-auto py-0">
+                    <a href="index.php" class="nav-item nav-link ">Home</a>
+                    <a href="about.php" class="nav-item nav-link">About</a>
 
-            <?php if ($S_ID) {?>
+                    <?php if ($userType == 3) {?>
+                        <a href="./Students.php" class="nav-item nav-link">Students</a>
+                        <?php }?>
 
-            <div class="nav-item dropdown">
-              <a
-                href="#"
-                class="nav-link dropdown-toggle active"
-                data-bs-toggle="dropdown"
-                ><?php echo $student_name ?></a
-              >
-              <div class="dropdown-menu m-0">
-                <a href="./Profile.php" class="dropdown-item">Profile</a>
-                <a href="./Logout.php" class="dropdown-item">Logout</a>
-              </div>
-            </div>
+                    <a href="contact.php" class="nav-item nav-link">Contact</a>
 
-            <?php } else {?>
+                    <?php if ($S_ID) {?>
 
-            <a href="../Login.php" class="nav-item nav-link">Login</a>
-            <a href="./Students.php" class="nav-item nav-link">Students</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><?php echo $student_name ?></a>
+                        <div class="dropdown-menu m-0">
 
-            <?php }?>
-          </div>
+                        <?php if ($userType != 3) {?>
+                        <a href="./Profile.php" class="dropdown-item active">Profile</a>
+                        <?php }?>
+                            <a href="./Setting.php" class="dropdown-item">Settings</a>
+                            <a href="./MyPosts.php" class="dropdown-item">My Posts</a>
+                            <a href="./Logout.php" class="dropdown-item">Logout</a>
+                        </div>
+                    </div>
+
+                    <?php } else {?>
+
+                        <a href="../Login.php" class="nav-item nav-link">Login</a>
+
+                    <?php }?>
+
+                </div>
         </div>
       </nav>
 
-      <div
-        id="header-carousel"
-        class="carousel slide carousel-fade"
-        data-bs-ride="carousel"
-      >
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img class="w-100" src="img/carousel-1.jpg" alt="Image" />
-            <div
-              class="carousel-caption d-flex flex-column align-items-center justify-content-center"
-            >
-              <div class="p-3" style="max-width: 900px">
-                <h5 class="text-white text-uppercase mb-3 animated slideInDown">
-                  Meet up with students
-                </h5>
-                <h1 class="display-1 text-white mb-md-4 animated zoomIn">
-                  Creative & Innovative Digital Solution
-                </h1>
-                <a
-                  href=""
-                  class="btn btn-outline-light py-md-3 px-md-5 animated slideInRight"
-                  >Contact Us</a
-                >
-              </div>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <img class="w-100" src="img/carousel-2.jpg" alt="Image" />
-            <div
-              class="carousel-caption d-flex flex-column align-items-center justify-content-center"
-            >
-              <div class="p-3" style="max-width: 900px">
-                <h5 class="text-white text-uppercase mb-3 animated slideInDown">
-                  Meet up with students
-                </h5>
-                <h1 class="display-1 text-white mb-md-4 animated zoomIn">
-                  Creative & Innovative Digital Solution
-                </h1>
-                <a
-                  href=""
-                  class="btn btn-outline-light py-md-3 px-md-5 animated slideInRight"
-                  >Contact Us</a
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-        <button
-          class="carousel-control-prev"
-          type="button"
-          data-bs-target="#header-carousel"
-          data-bs-slide="prev"
-        >
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button
-          class="carousel-control-next"
-          type="button"
-          data-bs-target="#header-carousel"
-          data-bs-slide="next"
-        >
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
+
     </div>
     <!-- Navbar End -->
 
@@ -490,75 +335,7 @@ document.location='./Profile.php';
 
           <div class="row justify-content-center g-5">
             <div class="col-lg-6 wow slideInUp" data-wow-delay="0.3s">
-              <div class="card">
-                <div class="card-body">
-                  <form method="POST" action="./Profile.php" enctype="multipart/form-data">
 
-                  <input type="hidden" value="<?php echo $S_ID ?>" name="student_id">
-                    <div class="row g-3">
-                      <div class="col-md-6">
-                        <input
-                          type="text"
-                          name="name"
-                          value="<?php echo $student_name ?>"
-                          class="form-control border-0 bg-light px-4"
-                          placeholder="Your Name"
-                          style="height: 55px"
-                        />
-                      </div>
-                      <div class="col-md-6">
-                        <input
-                          type="email"
-                          name="email"
-                          value="<?php echo $student_email ?>"
-                          class="form-control border-0 bg-light px-4"
-                          placeholder="Your Email"
-                          style="height: 55px"
-                        />
-                      </div>
-                      <div class="col-12">
-                        <input
-                          type="number"
-                          name="phone"
-                          value="<?php echo $phone ?>"
-                          pattern="[0-9]{10}"
-                          class="form-control border-0 bg-light px-4"
-                          placeholder="Subject"
-                          style="height: 55px"
-                        />
-                      </div>
-                      <div class="col-12">
-                        <input
-                          type="text"
-                          name="password"
-                          value="<?php echo $password ?>"
-                          pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{6,}$"
-                          class="form-control border-0 bg-light px-4"
-                          placeholder="Subject"
-                          style="height: 55px"
-                        />
-                      </div>
-                      <div class="col-12">
-                        <input
-                          type="file"
-                          name="file"
-                          class="form-control border-0 bg-light px-4"
-                          placeholder="Subject"
-                          style="height: 55px"
-                        />
-                      </div>
-                      <div class="col-12">
-                        <button
-                          class="btn btn-primary w-100 py-3"
-                          type="submit" name="SubmitAccount"
-                        >
-                          Update
-                        </button>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </div>
 
 
 
@@ -622,7 +399,7 @@ while ($row1 = mysqli_fetch_array($sql1)) {
                       >GPA</label
                     >
                     <div class="col-sm-8">
-                    <input type="number" min=0 step="0.01" name="gpa" class="form-control">
+                    <input type="number" min="0" step="0.01" max="5" name="gpa" class="form-control">
                     </div>
                   </div>
 
@@ -939,23 +716,25 @@ while ($row1 = mysqli_fetch_array($sql1)) {
                       >Course Name</label
                     >
                     <div class="col-sm-8">
-                      <!-- <input type="text" class="form-control" name="name" required/> -->
-                      <select class="form-select" aria-label="Default select example" name="course_id">
-                        <option selected>Select Course</option>
+                        <input
+                          class="form-control"
+                          list="datalistOptions"
+                          id="exampleDataList"
+                          placeholder="Type to search..."
+                          name="course_id"
+                        />
+                        <datalist id="datalistOptions">
                         <?php
 $sql1 = mysqli_query($con, "SELECT * from courses WHERE active = 1 ORDER BY id DESC");
-
 while ($row1 = mysqli_fetch_array($sql1)) {
-    $courses_id_select = $row1['id'];
-    $courses_name_select = $row1['name'];
+    $course_id_select = $row1['id'];
+    $course_name_select = $row1['name'];
+
     ?>
-                          <option value="<?php echo $courses_id_select ?>"><?php echo $courses_name_select ?></option>
-                        <?php }?>
-
-
-
-                    </select>
-                    </div>
+                          <option value="<?php echo $course_name_select ?>"><?php echo $course_name_select ?></option>
+                          <?php }?>
+                        </datalist>
+                      </div>
                   </div>
 
 

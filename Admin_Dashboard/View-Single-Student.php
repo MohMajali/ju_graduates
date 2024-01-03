@@ -35,8 +35,8 @@ if (!$A_ID) {
     <meta content="" name="keywords" />
 
     <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon" />
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
+    <link href="assets/img/fimage00001.jpeg" rel="icon" />
+    <link href="assets/img/image00001.jpeg" rel="apple-touch-icon" />
 
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect" />
@@ -68,9 +68,9 @@ if (!$A_ID) {
     <!-- ======= Header ======= -->
     <header id="header" class="header fixed-top d-flex align-items-center">
       <div class="d-flex align-items-center justify-content-between">
-        <a href="index.html" class="logo d-flex align-items-center">
-          <img src="assets/img/logo.png" alt="" />
-           
+        <a href="index.php" class="logo d-flex align-items-center">
+          <img src="assets/img/image00001.jpeg" alt="" />
+
         </a>
       </div>
       <!-- End Logo -->
@@ -89,8 +89,25 @@ if (!$A_ID) {
                 alt="Profile"
                 class="rounded-circle"
               />
-              <span class="d-none d-md-block ps-2"><?php echo $name ?></span> </a
-            ><!-- End Profile Iamge Icon -->
+              <span class="d-none d-md-block dropdown-toggle ps-2"><?php echo $name ?></span> </a
+            >
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+              <h6><?php echo $name ?></h6>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="./Logout.php">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Sign Out</span>
+              </a>
+            </li>
+
+          </ul>
           </li>
           <!-- End Profile Nav -->
         </ul>
@@ -108,7 +125,7 @@ if (!$A_ID) {
         <h1>Students</h1>
         <nav>
           <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
             <li class="breadcrumb-item">Students</li>
           </ol>
         </nav>
@@ -192,6 +209,7 @@ $row6 = mysqli_fetch_array($sql6);
               <th scope="col">Start Date</th>
               <th scope="col">End Date</th>
               <th scope="col">Created At</th>
+              <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -221,6 +239,9 @@ while ($row1 = mysqli_fetch_array($sql1)) {
               <td><?php echo $start_date ?></td>
               <td><?php echo $end_date ?></button></td>
               <td><?php echo $major_student_created_at ?></td>
+              <td>
+              <a href="./DeleteStudentMajor.php?student_major_id=<?php echo $student_major_id ?>&&student_id=<?php echo $student_id ?>" class="btn btn-danger">Delete</a>
+              </td>
 
             </tr>
 <?php }?>
@@ -251,6 +272,7 @@ while ($row1 = mysqli_fetch_array($sql1)) {
               <th scope="col">Project Image</th>
               <th scope="col">Link</th>
               <th scope="col">Created At</th>
+              <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -274,6 +296,9 @@ while ($row1 = mysqli_fetch_array($sql1)) {
               <td><img src="../Site/<?php echo $main_image ?>" width="150px" height="150px" alt=""></td>
               <td><a href="../Site/<?php echo $project_file ?>">Project File</a></td>
               <td><?php echo $project_student_created_at ?></td>
+              <td>
+                <a href="./DeleteStudentProject.php?project_major_id=<?php echo $project_major_id ?>&&student_id=<?php echo $student_id ?>" class="btn btn-danger">Delete</a>
+              </td>
 
             </tr>
 <?php }?>
@@ -304,6 +329,7 @@ while ($row1 = mysqli_fetch_array($sql1)) {
               <th scope="col">Start Date</th>
               <th scope="col">End Date</th>
               <th scope="col">Created At</th>
+              <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -338,6 +364,9 @@ while ($row1 = mysqli_fetch_array($sql1)) {
               <td><?php echo $start_date ?></td>
               <td><?php echo $end_date ?></td>
               <td><?php echo $exper_student_created_at ?></td>
+              <td>
+                <a href="./DeleteStudentExp.php?student_exper_id=<?php echo $student_exper_id ?>&&student_id=<?php echo $student_id ?>" class="btn btn-danger">Delete</a>
+              </td>
 
             </tr>
 <?php }?>
@@ -366,6 +395,7 @@ while ($row1 = mysqli_fetch_array($sql1)) {
               <th scope="col">Start Date</th>
               <th scope="col">End Date</th>
               <th scope="col">Created At</th>
+              <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -392,7 +422,10 @@ while ($row1 = mysqli_fetch_array($sql1)) {
               <td scope="row"><?php echo $course_name ?></td>
               <td><?php echo $start_date ?></td>
               <td><?php echo $end_date ?></td>
-              <td><?php echo $student_course_id ?></td>
+              <td><?php echo $course_student_created_at ?></td>
+              <td>
+                <a href="./DeleteStudentCourse.php?student_course_id=<?php echo $student_course_id ?>&&student_id=<?php echo $student_id ?>" class="btn btn-danger">Delete</a>
+              </td>
 
             </tr>
 <?php }?>
@@ -421,6 +454,7 @@ while ($row1 = mysqli_fetch_array($sql1)) {
               <th scope="col">Research Image</th>
               <th scope="col">Link</th>
               <th scope="col">Created At</th>
+              <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -444,6 +478,9 @@ while ($row1 = mysqli_fetch_array($sql1)) {
               <td><img src="../Site/<?php echo $research_image ?>" width="150px" height="150px" alt=""></td>
               <td><a href="../Site/<?php echo $research_file ?>">Research File</a></td>
               <td><?php echo $research_student_created_at ?></td>
+              <td>
+                <a href="./DeleteStudentResearch.php?research_id=<?php echo $research_id ?>&&student_id=<?php echo $student_id ?>" class="btn btn-danger">Delete</a>
+              </td>
 
             </tr>
 <?php }?>
@@ -469,6 +506,7 @@ while ($row1 = mysqli_fetch_array($sql1)) {
               <th scope="col">ID</th>
               <th scope="col">Link</th>
               <th scope="col">Created At</th>
+              <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -487,6 +525,9 @@ while ($row1 = mysqli_fetch_array($sql1)) {
               <td scope="row"><?php echo $cv_id ?></td>
               <td><a href="../Site/<?php echo $cv_file ?>">Research File</a></td>
               <td><?php echo $cv_created_at ?></td>
+              <td>
+                <a href="./DeleteStudentCV.php?cv_id=<?php echo $cv_id ?>&&student_id=<?php echo $student_id ?>" class="btn btn-danger">Delete</a>
+              </td>
 
             </tr>
 <?php }?>

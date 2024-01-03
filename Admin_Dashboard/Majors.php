@@ -56,8 +56,8 @@ if (!$A_ID) {
     <meta content="" name="keywords" />
 
     <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon" />
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
+    <link href="assets/img/image00001.jpeg" rel="icon" />
+    <link href="assets/img/image00001.jpeg" rel="apple-touch-icon" />
 
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect" />
@@ -89,8 +89,8 @@ if (!$A_ID) {
     <!-- ======= Header ======= -->
     <header id="header" class="header fixed-top d-flex align-items-center">
       <div class="d-flex align-items-center justify-content-between">
-        <a href="index.html" class="logo d-flex align-items-center">
-          <img src="assets/img/logo.png" alt="" />
+        <a href="index.php" class="logo d-flex align-items-center">
+          <img src="assets/img/image00001.jpeg" alt="" />
            
         </a>
       </div>
@@ -110,8 +110,25 @@ if (!$A_ID) {
                 alt="Profile"
                 class="rounded-circle"
               />
-              <span class="d-none d-md-block ps-2"><?php echo $name?></span> </a
-            ><!-- End Profile Iamge Icon -->
+              <span class="d-none d-md-block dropdown-toggle ps-2"><?php echo $name ?></span> </a
+            >
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+              <h6><?php echo $name ?></h6>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="./Logout.php">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Sign Out</span>
+              </a>
+            </li>
+
+          </ul>
           </li>
           <!-- End Profile Nav -->
         </ul>
@@ -129,7 +146,7 @@ if (!$A_ID) {
         <h1>Majors</h1>
         <nav>
           <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
             <li class="breadcrumb-item">Majors</li>
           </ol>
         </nav>
@@ -244,6 +261,7 @@ while ($row1 = mysqli_fetch_array($sql1)) {
     $name = $row1['name'];
     $department_id = $row1['department_id'];
     $created_at = $row1['created_at'];
+    $active = $row1['active'];
 
     $sql2 = mysqli_query($con, "SELECT * from departments WHERE id = '$department_id' ORDER BY id DESC");
     $row2 = mysqli_fetch_array($sql2);
@@ -260,6 +278,16 @@ while ($row1 = mysqli_fetch_array($sql1)) {
                         <a href="./Edit-Major.php?major_id=<?php echo $major_id ?>" class="btn btn-success"
                           >Edit</a
                         >
+
+                        <?php if ($active == 1) {?>
+
+<a href="./DeleteOrRestoreMajor.php?major_id=<?php echo $major_id ?>&&isActive=<?php echo 0 ?>" class="btn btn-danger">Delete</a>
+
+<?php } else {?>
+
+  <a href="./DeleteOrRestoreMajor.php?major_id=<?php echo $major_id ?>&&isActive=<?php echo 1 ?>" class="btn btn-primary">Restore</a>
+
+<?php }?>
                       </td>
                     </tr>
 <?php }?>

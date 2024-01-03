@@ -22,7 +22,7 @@ if (isset($_POST['Submit'])) {
         document.location="Admin_Dashboard/";
         </script>';
 
-        } else if ($row['user_type_id'] == 2) {
+        } else if ($row['user_type_id'] == 2 || $row['user_type_id'] == 3) {
 
             $S_ID = $row['id'];
             $_SESSION['S_Log'] = $S_ID;
@@ -48,13 +48,13 @@ if (isset($_POST['Submit'])) {
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-    <title>LOGIN Page</title>
+    <title>Login Page</title>
     <meta content="" name="description" />
     <meta content="" name="keywords" />
 
     <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon" />
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
+    <link href="assets/img/image00001.jpeg" rel="icon" />
+    <link href="assets/img/image00001.jpeg" rel="apple-touch-icon" />
 
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect" />
@@ -98,7 +98,7 @@ if (isset($_POST['Submit'])) {
                     href="index.html"
                     class="logo d-flex align-items-center w-auto"
                   >
-                    <img src="assets/img/logo.png" alt="" />
+                    <img src="assets/img/image00001.jpeg" alt="" />
                     <span class="d-none d-lg-block text-uppercase"
                       >JU-Graduates</span
                     >
@@ -117,7 +117,7 @@ if (isset($_POST['Submit'])) {
                       </p>
                     </div>
 
-                    <form class="row g-3 needs-validation" method="POST" action="./Login.php" novalidate>
+                    <form class="row g-3 needs-validation" method="POST" action="./Login.php" id="login-form" novalidate>
                       <div class="col-12">
                         <label for="yourEmail" class="form-label">Email</label>
                         <div class="input-group has-validation">
@@ -146,10 +146,10 @@ if (isset($_POST['Submit'])) {
                           name="password"
                           class="form-control"
                           id="yourPassword"
-                          pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{6,}$"
+                          oninput="onChange(this)"
                           required
                         />
-                        <div class="invalid-feedback">
+                        <div class="invalid-feedback" id="password-Message">
                           Please enter your password!
                         </div>
                       </div>
@@ -197,6 +197,7 @@ if (isset($_POST['Submit'])) {
     ></a>
 
     <!-- Vendor JS Files -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/vendor/chart.js/chart.umd.js"></script>
@@ -205,6 +206,23 @@ if (isset($_POST['Submit'])) {
     <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
     <script src="assets/vendor/tinymce/tinymce.min.js"></script>
     <script src="assets/vendor/php-email-form/validate.js"></script>
+
+    <script>
+      // let loginForm = $('#login-form')
+      // let passwordMessageDiv = $('#password-Message')
+      // let passwordInput = document.getElementById('yourPassword')
+      // const re = new RegExp("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{6,}$");
+
+
+      // const onChange = (e) => {
+      //   console.log(e.value);
+
+      //   if(!re.test(e.value)){
+      
+      //     passwordMessageDiv.html("<p>Password Must be at least One Upper case, One Lower Case, Numbers & Symbols</p>")
+      //   }
+      // }
+    </script>
 
     <!-- Template Main JS File -->
     <script src="assets/js/main.js"></script>
